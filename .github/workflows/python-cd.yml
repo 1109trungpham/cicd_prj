@@ -25,3 +25,9 @@ jobs:
 
     - name: Run ETL script
       run: python source/etl.py
+
+    - name: Upload ETL output as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: etl-output
+        path: output.csv
