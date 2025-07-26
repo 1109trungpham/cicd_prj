@@ -78,3 +78,10 @@ Vào repo của bạn trên GitHub
 Click tab "Actions"
 Bạn sẽ thấy workflow Python CI đang chạy
 Nếu test pytest pass thì bạn sẽ thấy màu xanh ✅
+
+-================================================================================
+-================================================================================
+
+git add .
+git commit -m "Thêm ETL + workflow CD"
+git push origin main
