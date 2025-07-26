@@ -1,0 +1,39 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          PYTHONPATH=. pytest
+
+      - name: Run ETL pipeline
+        if: success() # chỉ chạy nếu test pass
+        run: |
+          mkdir -p output
+          python -c "from source.etl import run_etl; run_etl()"
+
+      - name: Upload output as artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aggregated-output
+          path: output/aggregated.csv
